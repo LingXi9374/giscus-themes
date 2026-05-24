@@ -114,8 +114,8 @@ main {
   --color-segmented-control-button-selected-border: rgba(140, 149, 159, 0.3); /* 分段控件选中边框 */
 
   /* ---- 前景/文字颜色 ---- */
-  --color-fg-default: #1F2328;  /* 默认文字（主文字色） */
-  --color-fg-muted: #656d76;    /* 次要文字（时间戳等） */
+  --color-fg-default: #4c4f69;  /* 默认文字（主文字色） */
+  --color-fg-muted: #5c5f77;    /* 次要文字（时间戳等） */
   --color-fg-subtle: #6e7781;   /* 辅助文字（占位符等） */
 
   /* ---- 画布/背景颜色 ---- */
@@ -265,8 +265,8 @@ main .gsc-loading-image {
     --color-segmented-control-button-selected-border: rgba(110, 118, 129, 0.2); /* 分段控件选中边框 */
 
     /* ---- 前景/文字颜色 - Dark ---- */
-    --color-fg-default: #F5F5F5;  /* 默认文字（主文字色，高对比度） */
-    --color-fg-muted: #7d8590;    /* 次要文字（时间戳等） */
+    --color-fg-default: #cdd6f4;  /* 默认文字（主文字色，高对比度） */
+    --color-fg-muted: #bac2de;    /* 次要文字（时间戳等） */
     --color-fg-subtle: #6e7681;   /* 辅助文字（占位符等） */
 
     /* ---- 画布/背景颜色 - Dark ---- */
