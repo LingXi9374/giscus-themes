@@ -2,14 +2,45 @@
  * Copyright (c) 2018 GitHub Inc.
  * https://github.com/primer/primitives/blob/main/LICENSE
  *
- * Mica Cloud Mother Theme for Giscus
- * Inspired by Windows 11 Mica material design
- * - Subtle wallpaper bleed-through with minimal blur
- * - No noise texture, no heavy frosted glass
- * - Child elements inherit material, no independent blur
- * - Quiet, elegant, integrated with the desktop
+ * Mica 云母主题 for Giscus
+ * 灵感来源：Windows 11 Mica 云母材质设计
+ * 特点：
+ *   - 极高模糊度 + 无饱和度增强，壁纸色调柔和透出
+ *   - 无噪点纹理，无厚重磨砂玻璃感
+ *   - 子元素不独立应用 backdrop-filter，继承父容器材质
+ *   - 安静、优雅、与桌面融为一体
+ *
+ * 与 Acrylic 亚克力主题的核心区别：
+ *   ┌─────────────────┬──────────────────┬──────────────────┐
+ *   │     特性        │    Acrylic       │     Mica         │
+ *   ├─────────────────┼──────────────────┼──────────────────┤
+ *   │ 模糊度          │ 20px（中等）     │ 60px（极高）     │
+ *   │ 饱和度增强      │ 180%（增强）     │ 100%（不增强）   │
+ *   │ 子容器模糊      │ 独立 backdrop    │ 无，继承父级     │
+ *   │ 背景透明度      │ 低（0.45~0.65）  │ 高（0.6~0.85）   │
+ *   │ 边框可见度      │ 较明显           │ 极淡（发丝线）   │
+ *   │ 阴影            │ 有内阴影         │ 无，完全扁平     │
+ *   │ 整体观感        │ 磨砂玻璃，层次多 │ 云母石，沉稳内敛 │
+ *   └─────────────────┴──────────────────┴──────────────────┘
+ *
+ * 变量命名规范（Primer CSS）：
+ *   --color-prettylights-syntax-*  → 代码高亮配色
+ *   --color-btn-*                  → 按钮样式
+ *   --color-fg-*                   → 前景/文字颜色
+ *   --color-canvas-*               → 画布/背景颜色
+ *   --color-border-*               → 边框颜色
+ *   --color-accent-*               → 强调色（链接、交互元素）
+ *   --color-success/attention/danger-* → 状态色（成功/警告/危险）
+ *   --color-primer-shadow-*        → 阴影
+ *   --color-scale-*                → 灰度/色阶（用于 reaction 等）
+ *   --color-social-reaction-*       → 表情反应悬停背景
+ *   --color-action-list-item-*      → 操作列表项
+ *   --color-segmented-control-*     → 分段控件
  */
 
+/* ============================================================
+ *  字体引入 & 全局透明背景
+ * ============================================================ */
 @import url("//cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css");
 
 body {
@@ -22,144 +53,159 @@ html {
 }
 
 /* ============================================================
- * Light Mode - Mica Theme
+ *  Light Mode - 亮色模式
  * ============================================================ */
 
 /*! Mica Theme - Light */
 main {
-  /*! Mica: very subtle blur, no saturation boost, gentle wallpaper tint */
+  /*! Mica: 极高模糊度，不增强饱和度，壁纸色调柔和透出 */
   backdrop-filter: blur(60px) saturate(100%);
   -webkit-backdrop-filter: blur(60px) saturate(100%);
 
-  --color-prettylights-syntax-comment: #6e7781;
-  --color-prettylights-syntax-constant: #0550ae;
-  --color-prettylights-syntax-entity: #8250df;
-  --color-prettylights-syntax-storage-modifier-import: #24292f;
-  --color-prettylights-syntax-entity-tag: #116329;
-  --color-prettylights-syntax-keyword: #cf222e;
-  --color-prettylights-syntax-string: #0a3069;
-  --color-prettylights-syntax-variable: #953800;
-  --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
-  --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
-  --color-prettylights-syntax-invalid-illegal-bg: #82071e;
-  --color-prettylights-syntax-carriage-return-text: #f6f8fa;
-  --color-prettylights-syntax-carriage-return-bg: #cf222e;
-  --color-prettylights-syntax-string-regexp: #116329;
-  --color-prettylights-syntax-markup-list: #3b2300;
-  --color-prettylights-syntax-markup-heading: #0550ae;
-  --color-prettylights-syntax-markup-italic: #24292f;
-  --color-prettylights-syntax-markup-bold: #24292f;
-  --color-prettylights-syntax-markup-deleted-text: #82071e;
-  --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
-  --color-prettylights-syntax-markup-inserted-text: #116329;
-  --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
-  --color-prettylights-syntax-markup-changed-text: #953800;
-  --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
-  --color-prettylights-syntax-markup-ignored-text: #eaeef2;
-  --color-prettylights-syntax-markup-ignored-bg: #0550ae;
-  --color-prettylights-syntax-meta-diff-range: #8250df;
-  --color-prettylights-syntax-brackethighlighter-angle: #57606a;
-  --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
-  --color-prettylights-syntax-constant-other-reference-link: #0a3069;
+  /* ---- 代码高亮配色 (Pretty Lights Syntax) ---- */
+  --color-prettylights-syntax-comment: #6e7781;             /* 注释 */
+  --color-prettylights-syntax-constant: #0550ae;             /* 常量 */
+  --color-prettylights-syntax-entity: #8250df;               /* 实体（类名、类型） */
+  --color-prettylights-syntax-storage-modifier-import: #24292f; /* 导入修饰符 */
+  --color-prettylights-syntax-entity-tag: #116329;           /* HTML 标签 */
+  --color-prettylights-syntax-keyword: #cf222e;              /* 关键字 */
+  --color-prettylights-syntax-string: #0a3069;              /* 字符串 */
+  --color-prettylights-syntax-variable: #953800;             /* 变量 */
+  --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;  /* 未匹配括号 */
+  --color-prettylights-syntax-invalid-illegal-text: #f6f8fa; /* 非法文本 */
+  --color-prettylights-syntax-invalid-illegal-bg: #82071e;   /* 非法背景 */
+  --color-prettylights-syntax-carriage-return-text: #f6f8fa; /* 回车符文本 */
+  --color-prettylights-syntax-carriage-return-bg: #cf222e;   /* 回车符背景 */
+  --color-prettylights-syntax-string-regexp: #116329;        /* 正则表达式 */
+  --color-prettylights-syntax-markup-list: #3b2300;          /* 列表标记 */
+  --color-prettylights-syntax-markup-heading: #0550ae;       /* 标题标记 */
+  --color-prettylights-syntax-markup-italic: #24292f;        /* 斜体标记 */
+  --color-prettylights-syntax-markup-bold: #24292f;          /* 粗体标记 */
+  --color-prettylights-syntax-markup-deleted-text: #82071e;  /* 删除文本 */
+  --color-prettylights-syntax-markup-deleted-bg: #ffebe9;    /* 删除背景 */
+  --color-prettylights-syntax-markup-inserted-text: #116329; /* 插入文本 */
+  --color-prettylights-syntax-markup-inserted-bg: #dafbe1;   /* 插入背景 */
+  --color-prettylights-syntax-markup-changed-text: #953800;  /* 变更文本 */
+  --color-prettylights-syntax-markup-changed-bg: #ffd8b5;    /* 变更背景 */
+  --color-prettylights-syntax-markup-ignored-text: #eaeef2;  /* 忽略文本 */
+  --color-prettylights-syntax-markup-ignored-bg: #0550ae;    /* 忽略背景 */
+  --color-prettylights-syntax-meta-diff-range: #8250df;      /* diff 范围标记 */
+  --color-prettylights-syntax-brackethighlighter-angle: #57606a; /* 尖括号 */
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f; /* 行号栏标记 */
+  --color-prettylights-syntax-constant-other-reference-link: #0a3069; /* 引用链接 */
 
-  /*! Buttons - Mica: slightly more opaque, softer edges */
-  --color-btn-text: #24292f;
-  --color-btn-bg: rgba(246, 248, 250, 0.7);
-  --color-btn-border: rgba(31, 35, 40, 0.04);
-  --color-btn-shadow: 0 0 transparent;
-  --color-btn-inset-shadow: inset 0 0 transparent;
-  --color-btn-hover-bg: rgba(243, 244, 246, 0.8);
-  --color-btn-hover-border: rgba(31, 35, 40, 0.06);
-  --color-btn-active-bg: rgba(220, 223, 227, 0.8);
-  --color-btn-active-border: rgba(31, 35, 40, 0.04);
-  --color-btn-selected-bg: rgba(222, 226, 230, 0.8);
-  --color-btn-primary-text: #37A8EC;
-  --color-btn-primary-bg: #E0F1FE;
-  --color-btn-primary-border: rgba(55, 168, 236, 0.1);
-  --color-btn-primary-shadow: 0 0 transparent;
-  --color-btn-primary-inset-shadow: inset 0 0 transparent;
-  --color-btn-primary-hover-bg: #cce9fd;
-  --color-btn-primary-hover-border: rgba(55, 168, 236, 0.16);
-  --color-btn-primary-selected-bg: #b8ddfb;
-  --color-btn-primary-selected-shadow: 0 0 transparent;
-  --color-btn-primary-disabled-text: rgba(55, 168, 236, 0.4);
-  --color-btn-primary-disabled-bg: rgba(224, 241, 254, 0.5);
-  --color-btn-primary-disabled-border: rgba(55, 168, 236, 0.05);
+  /* ---- 普通按钮 ----
+   * Mica 风格：比 Acrylic 更不透明，边框更柔和，去除阴影
+   */
+  --color-btn-text: #24292f;                                  /* 按钮文字 */
+  --color-btn-bg: rgba(246, 248, 250, 0.7);                  /* 按钮背景（较高不透明度） */
+  --color-btn-border: rgba(31, 35, 40, 0.04);                /* 按钮边框（极淡） */
+  --color-btn-shadow: 0 0 transparent;                       /* 按钮外阴影（Mica 去除） */
+  --color-btn-inset-shadow: inset 0 0 transparent;           /* 按钮内阴影（Mica 去除） */
+  --color-btn-hover-bg: rgba(243, 244, 246, 0.8);           /* 悬停背景 */
+  --color-btn-hover-border: rgba(31, 35, 40, 0.06);          /* 悬停边框 */
+  --color-btn-active-bg: rgba(220, 223, 227, 0.8);           /* 按下背景 */
+  --color-btn-active-border: rgba(31, 35, 40, 0.04);         /* 按下边框 */
+  --color-btn-selected-bg: rgba(222, 226, 230, 0.8);         /* 选中背景 */
 
-  /*! Controls */
-  --color-action-list-item-default-hover-bg: rgba(208, 215, 222, 0.12);
-  --color-segmented-control-bg: rgba(234, 238, 242, 0.55);
-  --color-segmented-control-button-bg: rgba(255, 255, 255, 0.7);
-  --color-segmented-control-button-selected-border: rgba(140, 149, 159, 0.2);
+  /* ---- 主要按钮（Primary） ---- */
+  --color-btn-primary-text: #37A8EC;                           /* 主要按钮文字 */
+  --color-btn-primary-bg: #E0F1FE;                            /* 主要按钮背景 */
+  --color-btn-primary-border: rgba(55, 168, 236, 0.1);       /* 主要按钮边框（比 Acrylic 更淡） */
+  --color-btn-primary-shadow: 0 0 transparent;               /* 主要按钮外阴影（Mica 去除） */
+  --color-btn-primary-inset-shadow: inset 0 0 transparent;    /* 主要按钮内阴影（Mica 去除） */
+  --color-btn-primary-hover-bg: #cce9fd;                      /* 主要按钮悬停背景 */
+  --color-btn-primary-hover-border: rgba(55, 168, 236, 0.16); /* 主要按钮悬停边框 */
+  --color-btn-primary-selected-bg: #b8ddfb;                   /* 主要按钮选中背景 */
+  --color-btn-primary-selected-shadow: 0 0 transparent;      /* 主要按钮选中阴影（Mica 去除） */
+  --color-btn-primary-disabled-text: rgba(55, 168, 236, 0.4); /* 主要按钮禁用文字 */
+  --color-btn-primary-disabled-bg: rgba(224, 241, 254, 0.5); /* 主要按钮禁用背景 */
+  --color-btn-primary-disabled-border: rgba(55, 168, 236, 0.05); /* 主要按钮禁用边框 */
 
-  /*! Text */
-  --color-fg-default: #1F2328;
-  --color-fg-muted: #656d76;
-  --color-fg-subtle: #6e7781;
+  /* ---- 控件 ---- */
+  --color-action-list-item-default-hover-bg: rgba(208, 215, 222, 0.12); /* 操作列表项悬停（比 Acrylic 更淡） */
+  --color-segmented-control-bg: rgba(234, 238, 242, 0.55);   /* 分段控件背景 */
+  --color-segmented-control-button-bg: rgba(255, 255, 255, 0.7); /* 分段控件按钮背景（更不透明） */
+  --color-segmented-control-button-selected-border: rgba(140, 149, 159, 0.2); /* 分段控件选中边框（更淡） */
 
-  /*! Canvas - Mica: more opaque, subtle wallpaper tint */
-  --color-canvas-default: rgba(252, 252, 253, 0.82);
-  --color-canvas-overlay: rgba(255, 255, 255, 0.85);
-  --color-canvas-inset: rgba(246, 248, 250, 0.6);
-  --color-canvas-subtle: rgba(246, 248, 250, 0.6);
+  /* ---- 前景/文字颜色 ---- */
+  --color-fg-default: #1F2328;  /* 默认文字（主文字色） */
+  --color-fg-muted: #656d76;    /* 次要文字（时间戳等） */
+  --color-fg-subtle: #6e7781;   /* 辅助文字（占位符等） */
 
-  /*! Borders - Mica: nearly invisible, hairline */
-  --color-border-default: rgba(208, 215, 222, 0.16);
-  --color-border-muted: rgba(210, 218, 226, 0.08);
-  --color-neutral-muted: rgba(175, 184, 193, 0.06);
+  /* ---- 画布/背景颜色 ----
+   * Mica 风格：较高不透明度，壁纸色调柔和透出
+   * 与 Acrylic 的 transparent 不同，Mica 保留微弱底色
+   */
+  --color-canvas-default: rgba(252, 252, 253, 0.82);        /* 主背景（微透壁纸色调） */
+  --color-canvas-overlay: rgba(255, 255, 255, 0.85);        /* 浮层背景（弹窗、下拉） */
+  --color-canvas-inset: rgba(246, 248, 250, 0.6);           /* 内嵌区域背景（输入框） */
+  --color-canvas-subtle: rgba(246, 248, 250, 0.6);          /* 次要背景（区分区域） */
 
-  /*! Accent */
-  --color-accent-fg: #0969da;
-  --color-accent-emphasis: #0969da;
-  --color-accent-muted: rgba(84, 174, 255, 0.18);
-  --color-accent-subtle: rgba(221, 244, 255, 0.4);
+  /* ---- 边框 ----
+   * Mica 风格：极淡发丝线，几乎不可见
+   */
+  --color-border-default: rgba(208, 215, 222, 0.16);        /* 默认边框（比 Acrylic 更淡） */
+  --color-border-muted: rgba(210, 218, 226, 0.08);          /* 次要边框（分隔线） */
+  --color-neutral-muted: rgba(175, 184, 193, 0.06);         /* 中性色（占位，极淡） */
 
-  /*! Status */
-  --color-success-fg: #1a7f37;
-  --color-attention-fg: #9a6700;
-  --color-attention-muted: rgba(212, 167, 44, 0.18);
-  --color-attention-subtle: rgba(255, 248, 197, 0.4);
-  --color-danger-fg: #d1242f;
-  --color-danger-muted: rgba(255, 129, 130, 0.18);
-  --color-danger-subtle: rgba(255, 235, 233, 0.4);
+  /* ---- 强调色（链接、交互元素） ---- */
+  --color-accent-fg: #0969da;                                /* 强调色文字（链接） */
+  --color-accent-emphasis: #0969da;                           /* 强调色实色（徽章） */
+  --color-accent-muted: rgba(84, 174, 255, 0.18);           /* 强调色半透明（焦点框，比 Acrylic 更淡） */
+  --color-accent-subtle: rgba(221, 244, 255, 0.4);          /* 强调色浅底（高亮行） */
 
-  /*! Shadows - Mica: no inset shadows, flat and clean */
-  --color-primer-shadow-inset: inset 0 0 transparent;
-  --color-scale-gray-1: rgba(234, 238, 242, 0.4);
-  --color-scale-blue-1: rgba(182, 227, 255, 0.4);
+  /* ---- 状态色 ---- */
+  --color-success-fg: #1a7f37;                               /* 成功文字 */
+  --color-attention-fg: #9a6700;                              /* 警告文字 */
+  --color-attention-muted: rgba(212, 167, 44, 0.18);         /* 警告半透明（比 Acrylic 更淡） */
+  --color-attention-subtle: rgba(255, 248, 197, 0.4);        /* 警告浅底 */
+  --color-danger-fg: #d1242f;                                 /* 危险文字 */
+  --color-danger-muted: rgba(255, 129, 130, 0.18);           /* 危险半透明（比 Acrylic 更淡） */
+  --color-danger-subtle: rgba(255, 235, 233, 0.4);          /* 危险浅底 */
+
+  /* ---- 阴影 & 色阶 ----
+   * Mica 风格：完全扁平，无内阴影
+   */
+  --color-primer-shadow-inset: inset 0 0 transparent;        /* 内嵌阴影（Mica 完全去除） */
+  --color-scale-gray-1: rgba(234, 238, 242, 0.4);           /* 灰阶1（reaction 悬停） */
+  --color-scale-blue-1: rgba(182, 227, 255, 0.4);           /* 蓝阶1（reaction 已选悬停） */
 
   /*! Extensions from @primer/css/alerts/flash.scss */
-  --color-social-reaction-bg-hover: var(--color-scale-gray-1);
-  --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-1);
+  --color-social-reaction-bg-hover: var(--color-scale-gray-1);       /* 表情反应悬停背景 */
+  --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-1); /* 已选反应悬停背景 */
 }
 
-/*! Mica: child elements do NOT have independent backdrop-filter
- *  They inherit the material from the parent container.
- *  This is the key difference from Acrylic.
+/* ---- Mica 核心设计：子元素不独立应用 backdrop-filter ----
+ * 与 Acrylic 不同，Mica 的子容器不单独模糊。
+ * 它们继承父容器的材质效果，整体观感更沉稳统一。
+ * 这是 Mica 与 Acrylic 最关键的区别。
  */
 
-/*! Mica: hairline borders, barely visible */
+/* ---- 评论卡片边框：极淡发丝线 ---- */
 main .gsc-comment,
 main .gsc-comment-box,
 main .gsc-reaction-button {
   border-color: rgba(208, 215, 222, 0.1) !important;
 }
 
-/*! Mica: subtle separator lines between comments */
+/* ---- 评论时间线分隔线：几乎不可见 ---- */
 main .gsc-timeline {
   border-color: rgba(208, 215, 222, 0.06) !important;
 }
 
+/* ---- 分页加载动画（亮色） ---- */
 main .pagination-loader-container {
   background-image: url("https://github.com/images/modules/pulls/progressive-disclosure-line.svg");
 }
 
+/* ---- Giscus 加载动画（亮色） ---- */
 main .gsc-loading-image {
   background-image: url("https://github.githubassets.com/images/mona-loading-default.gif");
 }
 
 /* ============================================================
- * Dark Mode - Mica Theme
+ *  Dark Mode - 深色模式
  * ============================================================ */
 
 @media (prefers-color-scheme: dark) {
@@ -170,130 +216,146 @@ main .gsc-loading-image {
 
   /*! Mica Theme - Dark */
   main {
-    /*! Mica Dark: very subtle blur, no saturation boost, deep wallpaper tint */
+    /*! Mica Dark: 极高模糊度，不增强饱和度，深色壁纸色调透出 */
     backdrop-filter: blur(60px) saturate(100%);
     -webkit-backdrop-filter: blur(60px) saturate(100%);
 
-    --color-prettylights-syntax-comment: #8b949e;
-    --color-prettylights-syntax-constant: #79c0ff;
-    --color-prettylights-syntax-entity: #d2a8ff;
-    --color-prettylights-syntax-storage-modifier-import: #c9d1d9;
-    --color-prettylights-syntax-entity-tag: #7ee787;
-    --color-prettylights-syntax-keyword: #ff7b72;
-    --color-prettylights-syntax-string: #a5d6ff;
-    --color-prettylights-syntax-variable: #ffa657;
-    --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-    --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
-    --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
-    --color-prettylights-syntax-carriage-return-text: #f0f6fc;
-    --color-prettylights-syntax-carriage-return-bg: #b62324;
-    --color-prettylights-syntax-string-regexp: #7ee787;
-    --color-prettylights-syntax-markup-list: #f2cc60;
-    --color-prettylights-syntax-markup-heading: #1f6feb;
-    --color-prettylights-syntax-markup-italic: #c9d1d9;
-    --color-prettylights-syntax-markup-bold: #c9d1d9;
-    --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
-    --color-prettylights-syntax-markup-deleted-bg: #67060c;
-    --color-prettylights-syntax-markup-inserted-text: #aff5b4;
-    --color-prettylights-syntax-markup-inserted-bg: #033a16;
-    --color-prettylights-syntax-markup-changed-text: #ffdfb6;
-    --color-prettylights-syntax-markup-changed-bg: #5a1e02;
-    --color-prettylights-syntax-markup-ignored-text: #c9d1d9;
-    --color-prettylights-syntax-markup-ignored-bg: #1158c7;
-    --color-prettylights-syntax-meta-diff-range: #d2a8ff;
-    --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
-    --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
-    --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+    /* ---- 代码高亮配色 (Pretty Lights Syntax) - Dark ---- */
+    --color-prettylights-syntax-comment: #8b949e;             /* 注释 */
+    --color-prettylights-syntax-constant: #79c0ff;             /* 常量 */
+    --color-prettylights-syntax-entity: #d2a8ff;               /* 实体 */
+    --color-prettylights-syntax-storage-modifier-import: #c9d1d9; /* 导入修饰符 */
+    --color-prettylights-syntax-entity-tag: #7ee787;           /* HTML 标签 */
+    --color-prettylights-syntax-keyword: #ff7b72;              /* 关键字 */
+    --color-prettylights-syntax-string: #a5d6ff;              /* 字符串 */
+    --color-prettylights-syntax-variable: #ffa657;             /* 变量 */
+    --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;  /* 未匹配括号 */
+    --color-prettylights-syntax-invalid-illegal-text: #f0f6fc; /* 非法文本 */
+    --color-prettylights-syntax-invalid-illegal-bg: #8e1519;   /* 非法背景 */
+    --color-prettylights-syntax-carriage-return-text: #f0f6fc; /* 回车符文本 */
+    --color-prettylights-syntax-carriage-return-bg: #b62324;   /* 回车符背景 */
+    --color-prettylights-syntax-string-regexp: #7ee787;        /* 正则表达式 */
+    --color-prettylights-syntax-markup-list: #f2cc60;          /* 列表标记 */
+    --color-prettylights-syntax-markup-heading: #1f6feb;       /* 标题标记 */
+    --color-prettylights-syntax-markup-italic: #c9d1d9;        /* 斜体标记 */
+    --color-prettylights-syntax-markup-bold: #c9d1d9;          /* 粗体标记 */
+    --color-prettylights-syntax-markup-deleted-text: #ffdcd7;  /* 删除文本 */
+    --color-prettylights-syntax-markup-deleted-bg: #67060c;    /* 删除背景 */
+    --color-prettylights-syntax-markup-inserted-text: #aff5b4; /* 插入文本 */
+    --color-prettylights-syntax-markup-inserted-bg: #033a16;   /* 插入背景 */
+    --color-prettylights-syntax-markup-changed-text: #ffdfb6;  /* 变更文本 */
+    --color-prettylights-syntax-markup-changed-bg: #5a1e02;    /* 变更背景 */
+    --color-prettylights-syntax-markup-ignored-text: #c9d1d9;  /* 忽略文本 */
+    --color-prettylights-syntax-markup-ignored-bg: #1158c7;    /* 忽略背景 */
+    --color-prettylights-syntax-meta-diff-range: #d2a8ff;      /* diff 范围标记 */
+    --color-prettylights-syntax-brackethighlighter-angle: #8b949e; /* 尖括号 */
+    --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58; /* 行号栏标记 */
+    --color-prettylights-syntax-constant-other-reference-link: #a5d6ff; /* 引用链接 */
 
-    /*! Buttons - Mica Dark */
-    --color-btn-text: #c9d1d9;
-    --color-btn-bg: rgba(33, 38, 45, 0.7);
-    --color-btn-border: rgba(240, 246, 252, 0.04);
-    --color-btn-shadow: 0 0 transparent;
-    --color-btn-inset-shadow: 0 0 transparent;
-    --color-btn-hover-bg: rgba(48, 54, 61, 0.8);
-    --color-btn-hover-border: rgba(139, 148, 158, 0.12);
-    --color-btn-active-bg: rgba(30, 35, 42, 0.8);
-    --color-btn-active-border: rgba(110, 118, 129, 0.12);
-    --color-btn-selected-bg: rgba(22, 27, 34, 0.8);
-    --color-btn-primary-text: #37A8EC;
-    --color-btn-primary-bg: #E0F1FE;
-    --color-btn-primary-border: rgba(55, 168, 236, 0.1);
-    --color-btn-primary-shadow: 0 0 transparent;
-    --color-btn-primary-inset-shadow: 0 0 transparent;
-    --color-btn-primary-hover-bg: #cce9fd;
-    --color-btn-primary-hover-border: rgba(55, 168, 236, 0.16);
-    --color-btn-primary-selected-bg: #b8ddfb;
-    --color-btn-primary-selected-shadow: 0 0 transparent;
-    --color-btn-primary-disabled-text: rgba(55, 168, 236, 0.35);
-    --color-btn-primary-disabled-bg: rgba(224, 241, 254, 0.3);
-    --color-btn-primary-disabled-border: rgba(55, 168, 236, 0.05);
+    /* ---- 普通按钮 - Dark ----
+     * Mica Dark：更高不透明度，边框极淡，无阴影
+     */
+    --color-btn-text: #c9d1d9;                                /* 按钮文字 */
+    --color-btn-bg: rgba(33, 38, 45, 0.7);                   /* 按钮背景（较高不透明度） */
+    --color-btn-border: rgba(240, 246, 252, 0.04);            /* 按钮边框（极淡） */
+    --color-btn-shadow: 0 0 transparent;                     /* 按钮外阴影（Mica 去除） */
+    --color-btn-inset-shadow: 0 0 transparent;               /* 按钮内阴影（Mica 去除） */
+    --color-btn-hover-bg: rgba(48, 54, 61, 0.8);             /* 悬停背景 */
+    --color-btn-hover-border: rgba(139, 148, 158, 0.12);     /* 悬停边框 */
+    --color-btn-active-bg: rgba(30, 35, 42, 0.8);            /* 按下背景 */
+    --color-btn-active-border: rgba(110, 118, 129, 0.12);    /* 按下边框 */
+    --color-btn-selected-bg: rgba(22, 27, 34, 0.8);          /* 选中背景 */
 
-    /*! Controls */
-    --color-action-list-item-default-hover-bg: rgba(177, 186, 196, 0.06);
-    --color-segmented-control-bg: rgba(110, 118, 129, 0.06);
-    --color-segmented-control-button-bg: rgba(13, 17, 23, 0.7);
-    --color-segmented-control-button-selected-border: rgba(110, 118, 129, 0.14);
+    /* ---- 主要按钮（Primary） - Dark ---- */
+    --color-btn-primary-text: #37A8EC;                        /* 主要按钮文字 */
+    --color-btn-primary-bg: #E0F1FE;                          /* 主要按钮背景 */
+    --color-btn-primary-border: rgba(55, 168, 236, 0.1);     /* 主要按钮边框 */
+    --color-btn-primary-shadow: 0 0 transparent;             /* 主要按钮外阴影（Mica 去除） */
+    --color-btn-primary-inset-shadow: 0 0 transparent;        /* 主要按钮内阴影（Mica 去除） */
+    --color-btn-primary-hover-bg: #cce9fd;                    /* 主要按钮悬停背景 */
+    --color-btn-primary-hover-border: rgba(55, 168, 236, 0.16); /* 主要按钮悬停边框 */
+    --color-btn-primary-selected-bg: #b8ddfb;                 /* 主要按钮选中背景 */
+    --color-btn-primary-selected-shadow: 0 0 transparent;    /* 主要按钮选中阴影（Mica 去除） */
+    --color-btn-primary-disabled-text: rgba(55, 168, 236, 0.35); /* 主要按钮禁用文字 */
+    --color-btn-primary-disabled-bg: rgba(224, 241, 254, 0.3);   /* 主要按钮禁用背景 */
+    --color-btn-primary-disabled-border: rgba(55, 168, 236, 0.05); /* 主要按钮禁用边框 */
 
-    /*! Text */
-    --color-fg-default: #e6edf3;
-    --color-fg-muted: #7d8590;
-    --color-fg-subtle: #6e7681;
+    /* ---- 控件 - Dark ---- */
+    --color-action-list-item-default-hover-bg: rgba(177, 186, 196, 0.06); /* 操作列表项悬停（极淡） */
+    --color-segmented-control-bg: rgba(110, 118, 129, 0.06);  /* 分段控件背景（极淡） */
+    --color-segmented-control-button-bg: rgba(13, 17, 23, 0.7); /* 分段控件按钮背景 */
+    --color-segmented-control-button-selected-border: rgba(110, 118, 129, 0.14); /* 分段控件选中边框 */
 
-    /*! Canvas - Mica Dark: deep, slightly transparent, wallpaper tint */
-    --color-canvas-default: rgba(20, 22, 28, 0.82);
-    --color-canvas-overlay: rgba(22, 27, 34, 0.85);
-    --color-canvas-inset: rgba(1, 4, 9, 0.65);
-    --color-canvas-subtle: rgba(22, 27, 34, 0.65);
+    /* ---- 前景/文字颜色 - Dark ---- */
+    --color-fg-default: #F5F5F5;  /* 默认文字（主文字色，高对比度确保可读性） */
+    --color-fg-muted: #7d8590;    /* 次要文字（时间戳等） */
+    --color-fg-subtle: #6e7681;   /* 辅助文字（占位符等） */
 
-    /*! Borders - Mica Dark: nearly invisible */
-    --color-border-default: rgba(48, 54, 61, 0.2);
-    --color-border-muted: rgba(33, 38, 45, 0.12);
-    --color-neutral-muted: rgba(110, 118, 129, 0.12);
+    /* ---- 画布/背景颜色 - Dark ----
+     * Mica Dark：深色底，较高不透明度，壁纸深色调透出
+     */
+    --color-canvas-default: rgba(20, 22, 28, 0.82);          /* 主背景（深色微透壁纸色调） */
+    --color-canvas-overlay: rgba(22, 27, 34, 0.85);          /* 浮层背景（弹窗、下拉） */
+    --color-canvas-inset: rgba(1, 4, 9, 0.65);               /* 内嵌区域背景（输入框） */
+    --color-canvas-subtle: rgba(22, 27, 34, 0.65);           /* 次要背景（区分区域） */
 
-    /*! Accent */
-    --color-accent-fg: #2f81f7;
-    --color-accent-emphasis: #1f6feb;
-    --color-accent-muted: rgba(56, 139, 253, 0.18);
-    --color-accent-subtle: rgba(56, 139, 253, 0.06);
+    /* ---- 边框 - Dark ----
+     * Mica Dark：极淡发丝线
+     */
+    --color-border-default: rgba(48, 54, 61, 0.2);           /* 默认边框 */
+    --color-border-muted: rgba(33, 38, 45, 0.12);            /* 次要边框（分隔线，比 Acrylic 更淡） */
+    --color-neutral-muted: rgba(110, 118, 129, 0.12);        /* 中性色（占位） */
 
-    /*! Status */
-    --color-success-fg: #3fb950;
-    --color-attention-fg: #d29922;
-    --color-attention-muted: rgba(187, 128, 9, 0.18);
-    --color-attention-subtle: rgba(187, 128, 9, 0.06);
-    --color-danger-fg: #f85149;
-    --color-danger-muted: rgba(248, 81, 73, 0.18);
-    --color-danger-subtle: rgba(248, 81, 73, 0.06);
+    /* ---- 强调色 - Dark ---- */
+    --color-accent-fg: #2f81f7;                               /* 强调色文字（链接） */
+    --color-accent-emphasis: #1f6feb;                          /* 强调色实色（徽章） */
+    --color-accent-muted: rgba(56, 139, 253, 0.18);           /* 强调色半透明（焦点框，比 Acrylic 更淡） */
+    --color-accent-subtle: rgba(56, 139, 253, 0.06);          /* 强调色浅底（极淡） */
 
-    /*! Shadows - Mica Dark: flat, no inset shadows */
-    --color-primer-shadow-inset: 0 0 transparent;
-    --color-scale-gray-7: rgba(33, 38, 45, 0.4);
-    --color-scale-blue-8: rgba(12, 45, 107, 0.4);
+    /* ---- 状态色 - Dark ---- */
+    --color-success-fg: #3fb950;                               /* 成功文字 */
+    --color-attention-fg: #d29922;                              /* 警告文字 */
+    --color-attention-muted: rgba(187, 128, 9, 0.18);         /* 警告半透明（比 Acrylic 更淡） */
+    --color-attention-subtle: rgba(187, 128, 9, 0.06);       /* 警告浅底（极淡） */
+    --color-danger-fg: #f85149;                                /* 危险文字 */
+    --color-danger-muted: rgba(248, 81, 73, 0.18);             /* 危险半透明（比 Acrylic 更淡） */
+    --color-danger-subtle: rgba(248, 81, 73, 0.06);           /* 危险浅底（极淡） */
+
+    /* ---- 阴影 & 色阶 - Dark ----
+     * Mica Dark：完全扁平，无阴影
+     */
+    --color-primer-shadow-inset: 0 0 transparent;             /* 内嵌阴影（Mica 完全去除） */
+    --color-scale-gray-7: rgba(33, 38, 45, 0.4);             /* 灰阶7（reaction 悬停） */
+    --color-scale-blue-8: rgba(12, 45, 107, 0.4);            /* 蓝阶8（reaction 已选悬停） */
 
     /*! Extensions from @primer/css/alerts/flash.scss */
-    --color-social-reaction-bg-hover: var(--color-scale-gray-7);
-    --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-8);
+    --color-social-reaction-bg-hover: var(--color-scale-gray-7);       /* 表情反应悬停背景 */
+    --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-8); /* 已选反应悬停背景 */
   }
 
-  /*! Mica Dark: child elements do NOT have independent backdrop-filter */
+  /* ---- Mica Dark 核心设计：子元素不独立应用 backdrop-filter ----
+   * 与 Acrylic Dark 不同，Mica 的子容器不单独模糊。
+   * 整体观感更沉稳，不会出现多层磨砂叠加。
+   */
 
-  /*! Mica Dark: hairline borders */
+  /* ---- 评论卡片边框 - Dark：极淡发丝线 ---- */
   main .gsc-comment,
   main .gsc-comment-box,
   main .gsc-reaction-button {
     border-color: rgba(48, 54, 61, 0.12) !important;
   }
 
-  /*! Mica Dark: subtle separator lines */
+  /* ---- 评论时间线分隔线 - Dark：几乎不可见 ---- */
   main .gsc-timeline {
     border-color: rgba(48, 54, 61, 0.08) !important;
   }
 
+  /* ---- 分页加载动画（深色） ---- */
   main .pagination-loader-container {
     background-image: url("https://github.com/images/modules/pulls/progressive-disclosure-line-dark.svg");
   }
 
+  /* ---- Giscus 加载动画（深色） ---- */
   main .gsc-loading-image {
     background-image: url("https://github.githubassets.com/images/mona-loading-dark.gif");
   }
